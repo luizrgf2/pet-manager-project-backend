@@ -10,7 +10,7 @@ type InputCreateUserUseCase struct {
 }
 
 type OutputCreateuserUseCase struct {
-	id string
+	Id uint
 }
 
 type CreateUserUseCaseInterface interface {
