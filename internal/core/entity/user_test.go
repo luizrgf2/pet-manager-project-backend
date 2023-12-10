@@ -21,6 +21,7 @@ func TestCreateUser(t *testing.T) {
 		userMocked.AddrComplement,
 		userMocked.AddrDistrict,
 		userMocked.AddrNumber,
+		userMocked.AddrState,
 	)
 
 	assert.Nil(t, err)
@@ -46,6 +47,7 @@ func TestReturnErrorIfIsEmailInvalid(t *testing.T) {
 		userMocked.AddrComplement,
 		userMocked.AddrDistrict,
 		userMocked.AddrNumber,
+		userMocked.AddrState,
 	)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
@@ -70,6 +72,7 @@ func TestReturnErrorIfIsEmaiIsEmpty(t *testing.T) {
 		userMocked.AddrComplement,
 		userMocked.AddrDistrict,
 		userMocked.AddrNumber,
+		userMocked.AddrState,
 	)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
@@ -94,6 +97,7 @@ func TestReturnErrorIfIsPassLenInvalid(t *testing.T) {
 		userMocked.AddrComplement,
 		userMocked.AddrDistrict,
 		userMocked.AddrNumber,
+		userMocked.AddrState,
 	)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
@@ -118,8 +122,33 @@ func TestReturnErrorIfIsPassUpperLetterInvalid(t *testing.T) {
 		userMocked.AddrComplement,
 		userMocked.AddrDistrict,
 		userMocked.AddrNumber,
+		userMocked.AddrState,
 	)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
 
+}
+
+func TestReturnErrorIfCreateNewUserWithInvalidStateLocation(t *testing.T) {
+
+	expectedError := errors.ErroBase{
+		Message: errors.UserStateInvalidErrorMessage,
+		Code:    errors.UserStateInvalidErrorCode,
+	}
+
+	userMocked := moks.UserMock
+	_, err := entity.NewUser(
+		userMocked.NamePet,
+		userMocked.Email,
+		userMocked.Password,
+		userMocked.AddrCep,
+		userMocked.AddrStreet,
+		userMocked.AddrCity,
+		userMocked.AddrComplement,
+		userMocked.AddrDistrict,
+		userMocked.AddrNumber,
+		"mg",
+	)
+
+	assert.Equal(t, expectedError.Error(), err.Error())
 }
