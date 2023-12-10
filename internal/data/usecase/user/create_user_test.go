@@ -7,15 +7,17 @@ import (
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	errors_data "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	usecases_imp "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
+	repository_moks "github.com/luizrgf2/pet-manager-project-backend/test/moks/repository"
 	tests_moks "github.com/luizrgf2/pet-manager-project-backend/test/moks/service"
+
 	"github.com/stretchr/testify/assert"
 )
 
+var cepService = tests_moks.CEPServiceInMemory{}
+var userRepo = repository_moks.UserRepositoryInMemory{}
+var sut = usecases_imp.CreateUserUseCase{CepService: cepService, UserRepository: userRepo}
+
 func TestCreateUserUseCase(t *testing.T) {
-
-	cepService := tests_moks.CEPServiceInMemory{}
-
-	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
 
 	userToTeste := usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
@@ -33,9 +35,6 @@ func TestCreateUserUseCase(t *testing.T) {
 }
 
 func TestReturnErrorWIthInvalidEmail(t *testing.T) {
-
-	cepService := tests_moks.CEPServiceInMemory{}
-	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
 
 	expectedError := errors_core.ErroBase{
 		Message: errors_core.UserEmailInvalidErrorMessage,
@@ -59,9 +58,6 @@ func TestReturnErrorWIthInvalidEmail(t *testing.T) {
 
 func TestReturnErrorWIthInvalidCep(t *testing.T) {
 
-	cepService := tests_moks.CEPServiceInMemory{}
-	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
-
 	expectedError := errors_core.ErroBase{
 		Message: errors_data.CEPInvalidErrorMessage,
 		Code:    uint(errors_data.CEPInvalidErrorCode),
@@ -83,9 +79,6 @@ func TestReturnErrorWIthInvalidCep(t *testing.T) {
 }
 
 func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
-
-	cepService := tests_moks.CEPServiceInMemory{}
-	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
 
 	expectedError := errors_core.ErroBase{
 		Message: errors_core.UserPasswordLenErrorMessage,
@@ -109,9 +102,6 @@ func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
 
 func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
 
-	cepService := tests_moks.CEPServiceInMemory{}
-	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
-
 	expectedError := errors_core.ErroBase{
 		Message: errors_core.UserPasswordUpperLetterErrorMessage,
 		Code:    errors_core.UserPasswordUpperLetterErrorCode,
@@ -121,6 +111,28 @@ func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid.com",
 		Password:       "teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+	}
+
+	_, err := sut.Exec(userToTeste)
+
+	assert.Equal(t, expectedError.Error(), err.Error())
+
+}
+
+func TestReturnErrorIfTryCreateUserWithEmailAlreadyExists(t *testing.T) {
+
+	expectedError := errors_core.ErroBase{
+		Message: errors_core.UserAlreadyExistsErrorMessage,
+		Code:    errors_core.UserAlreadyExistsErrorCode,
+	}
+
+	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid1.com",
+		Password:       "Teste12345",
 		AddrCep:        "38705280",
 		AddrComplement: "",
 		AddrNumber:     622,
