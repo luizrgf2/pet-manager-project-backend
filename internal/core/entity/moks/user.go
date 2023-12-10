@@ -17,6 +17,7 @@ var UserMock = entity.UserEntity{
 	AddrComplement: "",
 	AddrDistrict:   "Sebastião Amorim",
 	AddrCity:       "Patos de Minas",
+	AddrState:      "MG",
 	UpdatedAt:      time.Now(),
 	CreatedAt:      time.Now(),
 }
