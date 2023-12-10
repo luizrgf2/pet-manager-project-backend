@@ -15,6 +15,7 @@ import (
 type CreateUserUseCase struct {
 	CepService     services.CEPServiceInterface
 	UserRepository repository.UserRepositoryInterface
+	HashService    services.HashServiceInterface
 }
 
 func (c *CreateUserUseCase) getAddrWithCep(cep string) (*services.AddrProps, error) {
@@ -56,19 +57,55 @@ func (c *CreateUserUseCase) checkIfUserAlreadyExists(email string) error {
 	} else {
 		return err
 	}
+}
 
+func (c *CreateUserUseCase) createUser(user *entity.UserEntity) (*uint, error) {
+	user, err := c.UserRepository.Create(repository.CreateUserRepositoryInput{
+		NamePet:        user.NamePet,
+		Email:          user.Email,
+		Password:       user.Password,
+		AddrCep:        user.AddrCep,
+		AddrStreet:     user.AddrStreet,
+		AddrNumber:     user.AddrNumber,
+		AddrComplement: &user.AddrComplement,
+		AddrDistrict:   user.AddrDistrict,
+		AddrCity:       user.AddrCity,
+		AddrState:      user.AddrState,
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	return &user.Id, nil
+}
+
+func (c *CreateUserUseCase) saveUser(user *entity.UserEntity) (*uint, error) {
+	user, err := c.UserRepository.Create(repository.CreateUserRepositoryInput{
+		NamePet:        user.NamePet,
+		Email:          user.Email,
+		Password:       user.Password,
+		AddrCep:        user.AddrCep,
+		AddrStreet:     user.AddrStreet,
+		AddrNumber:     user.AddrNumber,
+		AddrComplement: &user.AddrComplement,
+		AddrDistrict:   user.AddrDistrict,
+		AddrCity:       user.AddrCity,
+		AddrState:      user.AddrState,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &user.Id, nil
 }
 
 func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
 
 	err := c.validateCep(input.AddrCep)
-
 	if err != nil {
 		return nil, err
 	}
 
 	addr, err := c.getAddrWithCep(input.AddrCep)
-
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +122,6 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 		input.AddrNumber,
 		addr.State,
 	)
-
 	if err != nil {
 		return nil, err
 	}
@@ -94,6 +130,19 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 	if userNotExistsOrError != nil {
 		return nil, userNotExistsOrError
 	}
+
+	passTohash, err := c.HashService.Hash(userData.Password)
+	if err != nil {
+		return nil, err
+	}
+	userData.Password = *passTohash
+
+	idUser, err := c.saveUser(userData)
+	if err != nil {
+		return nil, err
+	}
+	userData.Password = ""
+	userData.Id = *idUser
 
 	outputToReturn := usecases.OutputCreateuserUseCase{Id: userData.Id}
 
