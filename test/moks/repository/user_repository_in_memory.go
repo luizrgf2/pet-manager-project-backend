@@ -9,16 +9,16 @@ import (
 )
 
 type UserRepositoryInMemory struct {
-	users []entity.UserEntity
+	Users []entity.UserEntity
 }
 
 func (U UserRepositoryInMemory) Create(input repository.CreateUserRepositoryInput) (*entity.UserEntity, error) {
 
 	var id uint = 1
 
-	if len(U.users) > 0 {
-		lenOfUsers := len(U.users)
-		lastUser := U.users[lenOfUsers-1]
+	if len(U.Users) > 0 {
+		lenOfUsers := len(U.Users)
+		lastUser := U.Users[lenOfUsers-1]
 		id = uint(lastUser.Id) + 1
 	}
 
@@ -38,14 +38,31 @@ func (U UserRepositoryInMemory) Create(input repository.CreateUserRepositoryInpu
 		CreatedAt:      time.Now(),
 	}
 
-	U.users = append(U.users, user)
+	U.Users = append(U.Users, user)
 
 	return &user, nil
 
 }
 
 func (U UserRepositoryInMemory) FindById(id uint) (*entity.UserEntity, error) {
-	for _, user := range U.users {
+
+	userToTest := entity.UserEntity{
+		Id:             20,
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid1.com",
+		Password:       "Teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+		AddrStreet:     "Alemar Rodrigues da Cunha",
+		AddrDistrict:   "Sebastião Amotim",
+		AddrCity:       "Patos de Minas",
+		AddrState:      "MG",
+	}
+
+	U.Users = append(U.Users, userToTest)
+
+	for _, user := range U.Users {
 		if user.Id == id {
 			return &user, nil
 		}
@@ -57,7 +74,24 @@ func (U UserRepositoryInMemory) FindById(id uint) (*entity.UserEntity, error) {
 }
 
 func (U UserRepositoryInMemory) FindByEmail(email string) (*entity.UserEntity, error) {
-	for _, user := range U.users {
+
+	userToTest := entity.UserEntity{
+		Id:             1,
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid1.com",
+		Password:       "Teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+		AddrStreet:     "Alemar Rodrigues da Cunha",
+		AddrDistrict:   "Sebastião Amotim",
+		AddrCity:       "Patos de Minas",
+		AddrState:      "MG",
+	}
+
+	U.Users = append(U.Users, userToTest)
+
+	for _, user := range U.Users {
 		if user.Email == email {
 			return &user, nil
 		}
@@ -71,7 +105,7 @@ func (U UserRepositoryInMemory) FindByEmail(email string) (*entity.UserEntity, e
 func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepositoryInput) (*entity.UserEntity, error) {
 	var user *entity.UserEntity = nil
 
-	for _, usr := range U.users {
+	for _, usr := range U.Users {
 		if usr.Id == id {
 			user = &usr
 		}
@@ -131,7 +165,7 @@ func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepos
 func (U UserRepositoryInMemory) Delete(id uint) error {
 	var user *entity.UserEntity = nil
 
-	for _, usr := range U.users {
+	for _, usr := range U.Users {
 		if usr.Id == id {
 			user = &usr
 		}
@@ -144,9 +178,9 @@ func (U UserRepositoryInMemory) Delete(id uint) error {
 		}
 	}
 
-	for _, usr := range U.users {
+	for _, usr := range U.Users {
 		if usr.Id != id {
-			U.users = append(U.users, usr)
+			U.Users = append(U.Users, usr)
 		}
 	}
 	return nil
