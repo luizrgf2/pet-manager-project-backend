@@ -59,6 +59,7 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 		input.AddrComplement,
 		addr.District,
 		input.AddrNumber,
+		addr.State,
 	)
 
 	if err != nil {
