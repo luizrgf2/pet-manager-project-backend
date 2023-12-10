@@ -7,6 +7,7 @@ const (
 	UserNameInvalidErrorCode         = 422
 	UserNotExistsErrorCode           = 404
 	UserAlreadyExistsErrorCode       = 409
+	UserStateInvalidErrorCode        = 422
 )
 
 const (
@@ -16,4 +17,5 @@ const (
 	UserNameInvalidErrorMessage         = "O nome deve ter de 4 a 50 caracteres!"
 	UserNotExistsErrorMessage           = "O usuário não existe!"
 	UserAlreadyExistsErrorMessage       = "O usuário já existe!"
+	UserStateInvalidErrorMessage        = "O estado de localização não é válido!"
 )
