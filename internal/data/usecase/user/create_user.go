@@ -147,5 +147,4 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 	outputToReturn := usecases.OutputCreateuserUseCase{Id: userData.Id}
 
 	return &outputToReturn, nil
-
 }
