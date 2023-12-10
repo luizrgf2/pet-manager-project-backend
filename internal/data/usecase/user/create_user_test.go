@@ -14,8 +14,9 @@ import (
 )
 
 var cepService = tests_moks.CEPServiceInMemory{}
+var hashService = tests_moks.HashServiceInMemory{}
 var userRepo = repository_moks.UserRepositoryInMemory{}
-var sut = usecases_imp.CreateUserUseCase{CepService: cepService, UserRepository: userRepo}
+var sut = usecases_imp.CreateUserUseCase{CepService: cepService, UserRepository: userRepo, HashService: hashService}
 
 func TestCreateUserUseCase(t *testing.T) {
 
@@ -31,7 +32,6 @@ func TestCreateUserUseCase(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Nil(t, err)
-
 }
 
 func TestReturnErrorWIthInvalidEmail(t *testing.T) {
@@ -53,7 +53,6 @@ func TestReturnErrorWIthInvalidEmail(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
 
 func TestReturnErrorWIthInvalidCep(t *testing.T) {
@@ -75,7 +74,6 @@ func TestReturnErrorWIthInvalidCep(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
 
 func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
@@ -97,7 +95,6 @@ func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
 
 func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
@@ -119,7 +116,6 @@ func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
 
 func TestReturnErrorIfTryCreateUserWithEmailAlreadyExists(t *testing.T) {
@@ -141,5 +137,4 @@ func TestReturnErrorIfTryCreateUserWithEmailAlreadyExists(t *testing.T) {
 	_, err := sut.Exec(userToTeste)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
