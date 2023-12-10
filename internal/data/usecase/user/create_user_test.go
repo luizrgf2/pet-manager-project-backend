@@ -81,3 +81,53 @@ func TestReturnErrorWIthInvalidCep(t *testing.T) {
 	assert.Equal(t, expectedError.Error(), err.Error())
 
 }
+
+func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
+
+	cepService := tests_moks.CEPServiceInMemory{}
+	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
+
+	expectedError := errors_core.ErroBase{
+		Message: errors_core.UserPasswordLenErrorMessage,
+		Code:    errors_core.UserPasswordLenErrorCode,
+	}
+
+	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid.com",
+		Password:       "1234",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+	}
+
+	_, err := sut.Exec(userToTeste)
+
+	assert.Equal(t, expectedError.Error(), err.Error())
+
+}
+
+func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
+
+	cepService := tests_moks.CEPServiceInMemory{}
+	sut := usecases_imp.CreateUserUseCase{CepService: cepService}
+
+	expectedError := errors_core.ErroBase{
+		Message: errors_core.UserPasswordUpperLetterErrorMessage,
+		Code:    errors_core.UserPasswordUpperLetterErrorCode,
+	}
+
+	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid.com",
+		Password:       "teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+	}
+
+	_, err := sut.Exec(userToTeste)
+
+	assert.Equal(t, expectedError.Error(), err.Error())
+
+}
