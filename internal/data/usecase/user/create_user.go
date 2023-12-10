@@ -1,17 +1,20 @@
 package usecases
 
 import (
+	"errors"
 	"regexp"
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
 	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	data_errors "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
+	repository "github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/repository"
 	services "github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/service"
 )
 
 type CreateUserUseCase struct {
-	CepService services.CEPServiceInterface
+	CepService     services.CEPServiceInterface
+	UserRepository repository.UserRepositoryInterface
 }
 
 func (c *CreateUserUseCase) getAddrWithCep(cep string) (*services.AddrProps, error) {
@@ -33,6 +36,27 @@ func (c *CreateUserUseCase) validateCep(cep string) error {
 		}
 	}
 	return nil
+}
+
+func (c *CreateUserUseCase) checkIfUserAlreadyExists(email string) error {
+	user, err := c.UserRepository.FindByEmail(email)
+
+	errorUserNotExists := &core_errors.ErroBase{
+		Message: core_errors.UserNotExistsErrorMessage,
+		Code:    core_errors.UserNotExistsErrorCode,
+	}
+
+	if errors.As(err, &errorUserNotExists) {
+		return nil
+	} else if err == nil && user != nil {
+		return &core_errors.ErroBase{
+			Message: core_errors.UserAlreadyExistsErrorMessage,
+			Code:    core_errors.UserAlreadyExistsErrorCode,
+		}
+	} else {
+		return err
+	}
+
 }
 
 func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
@@ -64,6 +88,11 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 
 	if err != nil {
 		return nil, err
+	}
+
+	userNotExistsOrError := c.checkIfUserAlreadyExists(input.Email)
+	if userNotExistsOrError != nil {
+		return nil, userNotExistsOrError
 	}
 
 	outputToReturn := usecases.OutputCreateuserUseCase{Id: userData.Id}
