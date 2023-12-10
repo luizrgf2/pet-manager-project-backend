@@ -73,7 +73,7 @@ func (U *UserEntity) IsValidState() bool {
 	return false
 }
 
-func NewUser(NamePet string, Email string, Password string, AddrCep string, AddrStreet string, AddrCity string, AddrComplement string, AddrDistrict string, AddrNumber uint) (*UserEntity, error) {
+func NewUser(NamePet string, Email string, Password string, AddrCep string, AddrStreet string, AddrCity string, AddrComplement string, AddrDistrict string, AddrNumber uint, AddrState string) (*UserEntity, error) {
 	user := &UserEntity{
 		Id:             0,
 		NamePet:        NamePet,
@@ -85,6 +85,7 @@ func NewUser(NamePet string, Email string, Password string, AddrCep string, Addr
 		AddrComplement: AddrComplement,
 		AddrDistrict:   AddrDistrict,
 		AddrCity:       AddrCity,
+		AddrState:      AddrState,
 		UpdatedAt:      time.Now(),
 		CreatedAt:      time.Now(),
 	}
