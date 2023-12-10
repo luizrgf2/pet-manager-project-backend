@@ -19,6 +19,7 @@ type UserEntity struct {
 	AddrComplement string
 	AddrDistrict   string
 	AddrCity       string
+	AddrState      string
 	UpdatedAt      time.Time
 	CreatedAt      time.Time
 }
@@ -57,6 +58,21 @@ func (U *UserEntity) IsValidUpperLetterPassword() bool {
 	return validPass
 }
 
+func (U *UserEntity) IsValidState() bool {
+	states := []string{
+		"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
+		"MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
+		"RS", "RO", "RR", "SC", "SP", "SE", "TO",
+	}
+
+	for _, state := range states {
+		if state == U.AddrState {
+			return true
+		}
+	}
+	return false
+}
+
 func NewUser(NamePet string, Email string, Password string, AddrCep string, AddrStreet string, AddrCity string, AddrComplement string, AddrDistrict string, AddrNumber uint) (*UserEntity, error) {
 	user := &UserEntity{
 		Id:             0,
@@ -87,6 +103,13 @@ func NewUser(NamePet string, Email string, Password string, AddrCep string, Addr
 
 	if !user.IsValidName() {
 		return nil, &errors.ErroBase{Message: errors.UserNameInvalidErrorMessage, Code: errors.UserNameInvalidErrorCode}
+	}
+
+	if !user.IsValidState() {
+		return nil, &errors.ErroBase{
+			Message: errors.UserStateInvalidErrorMessage,
+			Code:    errors.UserStateInvalidErrorCode,
+		}
 	}
 
 	return user, nil
