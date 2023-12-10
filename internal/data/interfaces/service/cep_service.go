@@ -9,5 +9,5 @@ type AddrProps struct {
 }
 
 type CEPServiceInterface interface {
-	GetAddr(cep string) (AddrProps, error)
+	GetAddr(cep string) (*AddrProps, error)
 }
