@@ -1,6 +1,6 @@
 package services
 
-type JWTService interface {
-	createToken(idUser string, expirationTimeInSeconds *uint) (string, error)
-	decryptToken(token string) (string, error)
+type JWTServiceInterface interface {
+	CreateToken(idUser string, expirationTimeInSeconds uint) (*string, error)
+	DecryptToken(token string) (*string, error)
 }
