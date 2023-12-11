@@ -16,7 +16,14 @@ import (
 var cepService = tests_moks.CEPServiceInMemory{}
 var hashService = tests_moks.HashServiceInMemory{}
 var userRepo = repository_moks.UserRepositoryInMemory{}
-var sut = usecases_imp.CreateUserUseCase{CepService: cepService, UserRepository: userRepo, HashService: hashService}
+var jwtService = tests_moks.JWTServiceInMemory{}
+
+var sut = usecases_imp.CreateUserUseCase{
+	CepService:     cepService,
+	UserRepository: userRepo,
+	HashService:    hashService,
+	JWTService:     jwtService,
+}
 
 func TestCreateUserUseCase(t *testing.T) {
 
