@@ -2,9 +2,7 @@ package usecases
 
 import (
 	"errors"
-	"fmt"
 	"regexp"
-	"strconv"
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
 	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
@@ -101,15 +99,6 @@ func (c *CreateUserUseCase) saveUser(user *entity.UserEntity) (*uint, error) {
 	return &user.Id, nil
 }
 
-func (c *CreateUserUseCase) createConfirmationToken(idUser uint) (*string, error) {
-	experationTime := 86400
-	token, err := c.JWTService.CreateToken(strconv.Itoa(int(idUser)), uint(experationTime))
-	if err != nil {
-		return nil, err
-	}
-	return token, nil
-}
-
 func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
 
 	err := c.validateCep(input.AddrCep)
@@ -153,16 +142,8 @@ func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecas
 	if err != nil {
 		return nil, err
 	}
-	userData.Password = ""
-	userData.Id = *idUser
 
-	token, err := c.createConfirmationToken(userData.Id)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println(token)
-
-	outputToReturn := usecases.OutputCreateuserUseCase{Id: userData.Id}
+	outputToReturn := usecases.OutputCreateuserUseCase{Id: *idUser}
 
 	return &outputToReturn, nil
 }
