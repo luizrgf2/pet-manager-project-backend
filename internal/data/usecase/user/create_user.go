@@ -16,7 +16,6 @@ type CreateUserUseCase struct {
 	CepService     services.CEPServiceInterface
 	UserRepository repository.UserRepositoryInterface
 	HashService    services.HashServiceInterface
-	JWTService     services.JWTServiceInterface
 }
 
 func (c *CreateUserUseCase) getAddrWithCep(cep string) (*services.AddrProps, error) {
