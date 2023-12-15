@@ -1,7 +1,7 @@
 package usecases
 
 type InputSendConfirmationEmailToSendUserUseCase struct {
-	idUserToCreateToken string
+	IdUserToCreateToken uint
 }
 
 type SendConfirmationEmailToSendUserUseCase interface {
