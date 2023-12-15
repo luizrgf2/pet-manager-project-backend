@@ -8,13 +8,13 @@ import (
 )
 
 type SendConfirmationEmailToUserUseCase struct {
-	jwtService                      services.JWTServiceInterface
+	JwtService                      services.JWTServiceInterface
 	SMTPService                     services.SMTPService
-	expirationTimeForTokenInSeconds uint
+	ExpirationTimeForTokenInSeconds uint
 }
 
 func (s *SendConfirmationEmailToUserUseCase) createTokenToSendWithEmail(idUser uint) (*string, error) {
-	token, err := s.jwtService.CreateToken(strconv.Itoa(int(idUser)), s.expirationTimeForTokenInSeconds)
+	token, err := s.JwtService.CreateToken(strconv.Itoa(int(idUser)), s.ExpirationTimeForTokenInSeconds)
 	if err != nil {
 		return nil, err
 	}
