@@ -22,7 +22,6 @@ var sut = usecases_imp.CreateUserUseCase{
 	CepService:     cepService,
 	UserRepository: userRepo,
 	HashService:    hashService,
-	JWTService:     jwtService,
 }
 
 func TestCreateUserUseCase(t *testing.T) {
