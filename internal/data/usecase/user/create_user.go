@@ -59,26 +59,6 @@ func (c *CreateUserUseCase) checkIfUserAlreadyExists(email string) error {
 	}
 }
 
-func (c *CreateUserUseCase) createUser(user *entity.UserEntity) (*uint, error) {
-	user, err := c.UserRepository.Create(repository.CreateUserRepositoryInput{
-		NamePet:        user.NamePet,
-		Email:          user.Email,
-		Password:       user.Password,
-		AddrCep:        user.AddrCep,
-		AddrStreet:     user.AddrStreet,
-		AddrNumber:     user.AddrNumber,
-		AddrComplement: &user.AddrComplement,
-		AddrDistrict:   user.AddrDistrict,
-		AddrCity:       user.AddrCity,
-		AddrState:      user.AddrState,
-	})
-
-	if err != nil {
-		return nil, err
-	}
-	return &user.Id, nil
-}
-
 func (c *CreateUserUseCase) saveUser(user *entity.UserEntity) (*uint, error) {
 	user, err := c.UserRepository.Create(repository.CreateUserRepositoryInput{
 		NamePet:        user.NamePet,
