@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -16,8 +18,23 @@ var (
 )
 
 func init() {
-	err := godotenv.Load(".env")
+	base_path, _ := os.Getwd()
+	path_complete := strings.Split(base_path, "/test")[0]
+	enviroment := os.Getenv("ENVIROMENT")
+
+	file_env_to_load := ""
+
+	if enviroment == "true" {
+		file_env_to_load = ".env.test"
+	} else {
+		file_env_to_load = ".env"
+	}
+
+	fmt.Println(enviroment)
+
+	err := godotenv.Load(path_complete + "/" + file_env_to_load)
 	if err != nil {
+		fmt.Println(err.Error())
 		panic("Error to load enviroment variables!")
 	}
 
