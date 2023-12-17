@@ -22,7 +22,7 @@ fi
 migrate -path=db/migrations -database="mysql://${CONTAINER_DB_USER}:${CONTAINER_DB_PASSWORD}@tcp(localhost:3306)/petManager" up
 
 # Executar seus testes aqui
-go test test/integrations/services/user/*
+go test test/integrations/user/*
 
 # Parar e remover o contêiner após a execução dos testes
 docker stop ${CONTAINER_NAME}
