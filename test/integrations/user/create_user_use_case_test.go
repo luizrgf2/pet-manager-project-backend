@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	moks "github.com/luizrgf2/pet-manager-project-backend/internal/core/entity/moks"
+	core_erros "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
@@ -32,8 +33,31 @@ func TestCreateUse(t *testing.T) {
 		AddrComplement: userToTest.AddrComplement,
 		AddrNumber:     userToTest.AddrNumber,
 	}
-	_, err := sut.Exec(input)
+	result, err := sut.Exec(input)
 
 	assert.Nil(t, err)
+	assert.Equal(t, uint(1), (result).Id)
+
+}
+
+func TestReturnErrorIfTryCreateUseAlreadyExists(t *testing.T) {
+
+	expectedError := &core_erros.ErroBase{
+		Message: core_erros.UserAlreadyExistsErrorMessage,
+		Code:    core_erros.UserAlreadyExistsErrorCode,
+	}
+
+	userToTest := moks.UserMock
+	input := usecases_interfaces.InputCreateUserUseCase{
+		NamePet:        userToTest.NamePet,
+		Email:          userToTest.Email,
+		Password:       userToTest.Password,
+		AddrCep:        userToTest.AddrCep,
+		AddrComplement: userToTest.AddrComplement,
+		AddrNumber:     userToTest.AddrNumber,
+	}
+	_, err := sut.Exec(input)
+
+	assert.Equal(t, expectedError.Error(), err.Error())
 
 }
