@@ -16,7 +16,7 @@ else
     docker run -e MYSQL_USER=${CONTAINER_DB_USER} -e MYSQL_PASSWORD=${CONTAINER_DB_PASSWORD} -e MYSQL_DATABASE=${CONTAINER_DB_NAME} -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d --name=${CONTAINER_NAME} mysql
 
     # Aguardar alguns segundos para garantir que o MySQL tenha tempo de iniciar
-    sleep 60
+    sleep 30
 fi
 
 migrate -path=db/migrations -database="mysql://${CONTAINER_DB_USER}:${CONTAINER_DB_PASSWORD}@tcp(localhost:3306)/petManager" up
