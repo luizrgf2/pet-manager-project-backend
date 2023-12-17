@@ -8,17 +8,19 @@ import (
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
+	services "github.com/luizrgf2/pet-manager-project-backend/internal/infra/service"
+
 	services_mocked "github.com/luizrgf2/pet-manager-project-backend/test/moks/service"
 	"github.com/stretchr/testify/assert"
 )
 
 var cepServiceMocked = services_mocked.CEPServiceInMemory{}
-var hashServiceMocked = services_mocked.HashServiceInMemory{}
+var hashService = services.HashService{}
 var userRepo = repository.UserRepository{}
 
 var sut = usecases.CreateUserUseCase{
 	CepService:     cepServiceMocked,
-	HashService:    hashServiceMocked,
+	HashService:    hashService,
 	UserRepository: userRepo,
 }
 
@@ -37,7 +39,6 @@ func TestCreateUse(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.Equal(t, uint(1), (result).Id)
-
 }
 
 func TestReturnErrorIfTryCreateUseAlreadyExists(t *testing.T) {
@@ -59,5 +60,4 @@ func TestReturnErrorIfTryCreateUseAlreadyExists(t *testing.T) {
 	_, err := sut.Exec(input)
 
 	assert.Equal(t, expectedError.Error(), err.Error())
-
 }
