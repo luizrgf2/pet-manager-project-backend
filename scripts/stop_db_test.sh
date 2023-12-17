@@ -1,0 +1,7 @@
+CONTAINER_NAME="db_test"
+CONTAINER_DB_USER="test"
+CONTAINER_DB_PASSWORD="test"
+CONTAINER_DB_NAME="petManager"
+
+docker stop ${CONTAINER_NAME}
+docker rm ${CONTAINER_NAME}
