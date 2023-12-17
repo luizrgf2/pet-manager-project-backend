@@ -30,8 +30,6 @@ func init() {
 		file_env_to_load = ".env"
 	}
 
-	fmt.Println(enviroment)
-
 	err := godotenv.Load(path_complete + "/" + file_env_to_load)
 	if err != nil {
 		fmt.Println(err.Error())
