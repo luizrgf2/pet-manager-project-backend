@@ -1,5 +1,5 @@
 package services
 
-type SMTPService interface {
+type SMTPServiceInterface interface {
 	SendConfirmationEmailToUser(tokenOfConfirmation string) error
 }
