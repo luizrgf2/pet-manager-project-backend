@@ -10,11 +10,10 @@ import (
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
 	services "github.com/luizrgf2/pet-manager-project-backend/internal/infra/service"
 
-	services_mocked "github.com/luizrgf2/pet-manager-project-backend/test/moks/service"
 	"github.com/stretchr/testify/assert"
 )
 
-var cepServiceMocked = services_mocked.CEPServiceInMemory{}
+var cepServiceMocked = services.CepServiceViaCep{}
 var hashService = services.HashService{}
 var userRepo = repository.UserRepository{}
 
