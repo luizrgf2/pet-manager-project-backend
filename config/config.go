@@ -15,11 +15,14 @@ var (
 	MYSQL_NAME_DATABASE = "petManager"
 	MYSQL_USER          = "root"
 	MYSQL_PASSWORD      = ""
+	JWT_KEY             = ""
 )
 
 func init() {
 	base_path, _ := os.Getwd()
 	path_complete := strings.Split(base_path, "/test")[0]
+	path_complete = strings.Split(base_path, "/internal")[0]
+
 	enviroment := os.Getenv("ENVIROMENT")
 
 	file_env_to_load := ""
@@ -41,4 +44,5 @@ func init() {
 	MYSQL_NAME_DATABASE = os.Getenv("MYSQL_NAME_DATABASE")
 	MYSQL_USER = os.Getenv("MYSQL_USER")
 	MYSQL_PASSWORD = os.Getenv("MYSQL_PASSWORD")
+	JWT_KEY = os.Getenv("JWT_KEY")
 }
