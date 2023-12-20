@@ -216,6 +216,26 @@ func (u UserRepository) Update(id uint, input repository_interfaces.UpdateUserRe
 	}, nil
 }
 
+func (u UserRepository) CheckIfUserConfirmed(id uint) (bool, error) {
+	confirmed := false
+	query := fmt.Sprintf("SELECT confirmed FROM users WHERE id=%d", id)
+
+	result, err := DB.DB.Query(query)
+	if err != nil {
+		return false, &core_errors.ErroBase{
+			Message: "Erro para validar se o usuário já foi confirmado!",
+			Code:    500,
+		}
+	}
+
+	for result.Next() {
+		result.Scan(
+			&confirmed,
+		)
+	}
+	return confirmed, nil
+}
+
 func (u UserRepository) Delete(id uint) error {
 	return nil
 }

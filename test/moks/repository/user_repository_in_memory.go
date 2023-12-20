@@ -166,6 +166,10 @@ func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepos
 
 }
 
+func (U UserRepositoryInMemory) CheckIfUserConfirmed(id uint) (bool, error) {
+	return true, nil
+}
+
 func (U UserRepositoryInMemory) Delete(id uint) error {
 	var user *entity.UserEntity = nil
 
