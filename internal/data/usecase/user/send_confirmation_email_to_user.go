@@ -14,7 +14,7 @@ type SendConfirmationEmailToUserUseCase struct {
 }
 
 func (s *SendConfirmationEmailToUserUseCase) createTokenToSendWithEmail(idUser uint) (*string, error) {
-	token, err := s.JwtService.CreateToken(strconv.Itoa(int(idUser)), s.ExpirationTimeForTokenInSeconds)
+	token, err := s.JwtService.CreateToken(strconv.Itoa(int(idUser)), &s.ExpirationTimeForTokenInSeconds)
 	if err != nil {
 		return nil, err
 	}
