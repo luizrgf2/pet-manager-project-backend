@@ -3,7 +3,7 @@ package test
 type JWTServiceInMemory struct {
 }
 
-func (J JWTServiceInMemory) CreateToken(idUser string, expirationTimeInSeconds uint) (*string, error) {
+func (J JWTServiceInMemory) CreateToken(idUser string, expirationTimeInSeconds *uint) (*string, error) {
 	jwtToken := "213324lkjjskdfvkjsdjeer2"
 	return &jwtToken, nil
 }
