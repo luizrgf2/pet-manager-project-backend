@@ -138,6 +138,65 @@ func (u UserRepository) FindByEmail(email string) (*entity.UserEntity, error) {
 	return &user, nil
 }
 
+func (u UserRepository) UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error {
+
+	if expirationTimeInSeconds != nil {
+		expiration := *expirationTimeInSeconds
+		expirationDate := time.Now()
+		expirationDate.Add(time.Duration(expiration))
+
+		query := fmt.Sprintf("UPDATE users SET confirmation_token = '%s', expiration_confirmation_token='%s' WHERE id=%d", token, expirationDate.Format("2006-01-02 15:04:05"), id)
+		result, err := DB.DB.Exec(query)
+
+		if err != nil {
+			return &core_errors.ErroBase{
+				Message: "Erro para atualizar o token de confirmação!",
+				Code:    500,
+			}
+		}
+
+		if rowsEffected, err := result.RowsAffected(); err != nil {
+			if rowsEffected != 1 {
+				return &core_errors.ErroBase{
+					Message: "Erro para atualizar o token de confirmação!",
+					Code:    500,
+				}
+			}
+		} else {
+			return &core_errors.ErroBase{
+				Message: "Erro para atualizar o token de confirmação!",
+				Code:    500,
+			}
+		}
+
+	} else {
+		query := fmt.Sprintf("UPDATE users SET confirmation_token = '%s' WHERE id=%d", token, id)
+		result, err := DB.DB.Exec(query)
+
+		if err != nil {
+			return &core_errors.ErroBase{
+				Message: "Erro para atualizar o token de confirmação!",
+				Code:    500,
+			}
+		}
+
+		if rowsEffected, err := result.RowsAffected(); err != nil {
+			if rowsEffected != 1 {
+				return &core_errors.ErroBase{
+					Message: "Erro para atualizar o token de confirmação!",
+					Code:    500,
+				}
+			}
+		} else {
+			return &core_errors.ErroBase{
+				Message: "Erro para atualizar o token de confirmação!",
+				Code:    500,
+			}
+		}
+	}
+	return nil
+}
+
 func (u UserRepository) Update(id uint, input repository_interfaces.UpdateUserRepositoryInput) (*entity.UserEntity, error) {
 	return &entity.UserEntity{
 		Id:             0,
