@@ -167,7 +167,18 @@ func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepos
 }
 
 func (U UserRepositoryInMemory) CheckIfUserConfirmed(id uint) (bool, error) {
-	return true, nil
+
+	if id == 1 {
+		return false, nil
+	} else if id == 2 {
+		return true, nil
+	} else {
+		return false, &errors.ErroBase{
+			Message: errors.UserNotExistsErrorMessage,
+			Code:    errors.UserNotExistsErrorCode,
+		}
+	}
+
 }
 
 func (U UserRepositoryInMemory) Delete(id uint) error {
