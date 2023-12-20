@@ -31,6 +31,7 @@ func (u *UserRepository) convertDbUserToEntityUser(entityUser *entity.UserEntity
 		nil,
 		&entityUser.CreatedAt,
 		&entityUser.UpdatedAt,
+		nil,
 	)
 }
 
