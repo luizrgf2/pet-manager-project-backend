@@ -9,7 +9,7 @@ import (
 
 type SendConfirmationEmailToUserUseCase struct {
 	JwtService                      services.JWTServiceInterface
-	SMTPService                     services.SMTPService
+	SMTPService                     services.SMTPServiceInterface
 	ExpirationTimeForTokenInSeconds uint
 }
 
