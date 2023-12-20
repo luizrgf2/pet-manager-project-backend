@@ -102,6 +102,10 @@ func (U UserRepositoryInMemory) FindByEmail(email string) (*entity.UserEntity, e
 	}
 }
 
+func (u UserRepositoryInMemory) UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error {
+	return nil
+}
+
 func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepositoryInput) (*entity.UserEntity, error) {
 	var user *entity.UserEntity = nil
 
