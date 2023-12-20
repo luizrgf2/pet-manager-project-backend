@@ -35,5 +35,6 @@ type UserRepositoryInterface interface {
 	FindById(id uint) (*entity.UserEntity, error)
 	FindByEmail(email string) (*entity.UserEntity, error)
 	Update(id uint, input UpdateUserRepositoryInput) (*entity.UserEntity, error)
+	UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error
 	Delete(id uint) error
 }
