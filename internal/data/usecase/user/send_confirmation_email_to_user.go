@@ -25,8 +25,8 @@ func (s *SendConfirmationEmailToUserUseCase) createTokenToSendWithEmail(idUser u
 	return token, nil
 }
 
-func (s *SendConfirmationEmailToUserUseCase) sendEmailToUser(token string) error {
-	err := s.SMTPService.SendConfirmationEmailToUser(token)
+func (s *SendConfirmationEmailToUserUseCase) sendEmailToUser(token string, emailTo string) error {
+	err := s.SMTPService.SendConfirmationEmailToUser(token, emailTo)
 	if err != nil {
 		return err
 	}
@@ -36,6 +36,11 @@ func (s *SendConfirmationEmailToUserUseCase) sendEmailToUser(token string) error
 func (s SendConfirmationEmailToUserUseCase) Exec(input usecases.InputSendConfirmationEmailToSendUserUseCase) error {
 
 	confirmed, err := s.UserRepo.CheckIfUserConfirmed(input.IdUserToCreateToken)
+	if err != nil {
+		return err
+	}
+
+	user, err := s.UserRepo.FindById(input.IdUserToCreateToken)
 	if err != nil {
 		return err
 	}
@@ -52,7 +57,7 @@ func (s SendConfirmationEmailToUserUseCase) Exec(input usecases.InputSendConfirm
 		return err
 	}
 
-	ErrToSendEmail := s.sendEmailToUser(*token)
+	ErrToSendEmail := s.sendEmailToUser(*token, user.Email)
 	if ErrToSendEmail != nil {
 		return ErrToSendEmail
 	}
