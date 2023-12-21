@@ -88,7 +88,7 @@ func (u UserRepository) Create(input repository_interfaces.CreateUserRepositoryI
 }
 
 func (u UserRepository) FindById(id uint) (*entity.UserEntity, error) {
-	query := fmt.Sprintf("SELECT * FROM users WHERE email = %d", id)
+	query := fmt.Sprintf("SELECT * FROM users WHERE id = %d", id)
 
 	result, err := DB.DB.Query(query)
 
