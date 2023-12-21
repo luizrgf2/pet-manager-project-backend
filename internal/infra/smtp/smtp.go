@@ -40,7 +40,7 @@ func SendEmail(input SMTPConfiguration) error {
 
 		"%s\r\n", To, input.Subject, input.Message)
 
-	errToSendEmail := smtp.SendMail(fmt.Sprintf("%s:%d", To, port), input.Auth, config.SMTP_EMAIL_SENDER, to, []byte(message))
+	errToSendEmail := smtp.SendMail(fmt.Sprintf("%s:%d", config.SMTP_SERVER, port), input.Auth, config.SMTP_EMAIL_SENDER, to, []byte(message))
 
 	if errToSendEmail != nil {
 		return errToSendEmail
