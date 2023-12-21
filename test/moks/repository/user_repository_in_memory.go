@@ -60,7 +60,37 @@ func (U UserRepositoryInMemory) FindById(id uint) (*entity.UserEntity, error) {
 		AddrState:      "MG",
 	}
 
+	userToTest2 := entity.UserEntity{
+		Id:             1,
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid1.com",
+		Password:       "Teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+		AddrStreet:     "Alemar Rodrigues da Cunha",
+		AddrDistrict:   "Sebastião Amotim",
+		AddrCity:       "Patos de Minas",
+		AddrState:      "MG",
+	}
+
+	userToTest3 := entity.UserEntity{
+		Id:             2,
+		NamePet:        "Felicidog pet salon",
+		Email:          "email@valid1.com",
+		Password:       "Teste12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     622,
+		AddrStreet:     "Alemar Rodrigues da Cunha",
+		AddrDistrict:   "Sebastião Amotim",
+		AddrCity:       "Patos de Minas",
+		AddrState:      "MG",
+	}
+
 	U.Users = append(U.Users, userToTest)
+	U.Users = append(U.Users, userToTest2)
+	U.Users = append(U.Users, userToTest3)
 
 	for _, user := range U.Users {
 		if user.Id == id {
