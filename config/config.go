@@ -16,6 +16,10 @@ var (
 	MYSQL_USER          = "root"
 	MYSQL_PASSWORD      = ""
 	JWT_KEY             = ""
+	SMTP_EMAIL_SENDER   = ""
+	SMTP_SERVER         = ""
+	SMTP_PASSWORD       = ""
+	SMTP_PORT           = 0
 )
 
 func init() {
@@ -50,4 +54,12 @@ func init() {
 	MYSQL_USER = os.Getenv("MYSQL_USER")
 	MYSQL_PASSWORD = os.Getenv("MYSQL_PASSWORD")
 	JWT_KEY = os.Getenv("JWT_KEY")
+	SMTP_SERVER = os.Getenv("SMTP_SERVER")
+	SMTP_EMAIL_SENDER = os.Getenv("SMTP_EMAIL_SENDER")
+	SMTP_PASSWORD = os.Getenv("SMTP_PASSWORD")
+	SMTP_PORT, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
+
+	if err != nil {
+		panic(err.Error())
+	}
 }
