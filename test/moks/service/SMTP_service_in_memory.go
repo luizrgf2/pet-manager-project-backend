@@ -3,6 +3,6 @@ package test
 type SMTPServiceInMemory struct {
 }
 
-func (s SMTPServiceInMemory) SendConfirmationEmailToUser(tokenOfConfirmation string) error {
+func (s SMTPServiceInMemory) SendConfirmationEmailToUser(tokenOfConfirmation string, emailTo string) error {
 	return nil
 }
