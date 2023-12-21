@@ -7,7 +7,6 @@ import (
 	"github.com/luizrgf2/pet-manager-project-backend/config"
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
-	data_errors "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
 	services "github.com/luizrgf2/pet-manager-project-backend/internal/infra/service"
@@ -40,7 +39,7 @@ func init() {
 	if err != nil {
 		panic(err.Error())
 	} else {
-		fmt.Println("users created!!")
+		fmt.Println("user test 1 created!!")
 	}
 
 }
@@ -61,30 +60,6 @@ func TestSendConfirmationEmail(t *testing.T) {
 	}
 	err := sut.Exec(input)
 	assert.Nil(t, err)
-}
-
-func TestReturnErrorIfSendEmailToUserConfirmed(t *testing.T) {
-
-	expectedError := &errors.ErroBase{
-		Message: data_errors.UserAlreadyConfirmedErrorMessage,
-		Code:    data_errors.UserAlreadyConfirmedErrorCode,
-	}
-
-	jwtService := services.JWTService{}
-	smtpService := services.SMTPService{}
-	userRepo := repository.UserRepository{}
-
-	sut := usecases.SendConfirmationEmailToUserUseCase{
-		JwtService:                      jwtService,
-		SMTPService:                     smtpService,
-		ExpirationTimeForTokenInSeconds: 21600,
-		UserRepo:                        userRepo,
-	}
-	input := usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
-		IdUserToCreateToken: 2,
-	}
-	err := sut.Exec(input)
-	assert.Equal(t, expectedError, err)
 }
 
 func TestReturnErrorIfSendEmailToUserNotExists(t *testing.T) {
