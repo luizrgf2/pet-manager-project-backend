@@ -1,7 +1,10 @@
 package service
 
 import (
+	"strings"
+
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	infra_error "github.com/luizrgf2/pet-manager-project-backend/internal/infra/error/services"
 	"github.com/luizrgf2/pet-manager-project-backend/internal/infra/smtp"
 )
 
@@ -19,6 +22,13 @@ func (s SMTPService) SendConfirmationEmailToUser(tokenOfConfirmation string, ema
 	err := smtp.SendEmail(input)
 
 	if err != nil {
+		if strings.Contains(err.Error(), "dial tcp: lookup") && strings.Contains(err.Error(), "no such host") {
+			return &errors.ErroBase{
+				Message: infra_error.EmailNotFoundedErrorMessage,
+				Code:    infra_error.EmailNotFoundedErrorCode,
+			}
+		}
+
 		return &errors.ErroBase{
 			Message: "Erro para enviar o email",
 			Code:    500,
