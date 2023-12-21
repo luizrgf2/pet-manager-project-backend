@@ -31,9 +31,9 @@ func (j JWTService) CreateToken(idUser string, expirationTimeInSeconds *uint) (*
 			RegisteredClaims: registerClains,
 		}
 
-		token := jwt.NewWithClaims(jwt.SigningMethodES256, clains)
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, clains)
 
-		tokenString, err := token.SignedString(config.JWT_KEY)
+		tokenString, err := token.SignedString([]byte(config.JWT_KEY))
 		if err != nil {
 			return nil, &core_errors.ErroBase{
 				Message: jwt_errors.JWTErrorToCreateTokenErrorMessage,
