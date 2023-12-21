@@ -40,16 +40,16 @@ func (s SendConfirmationEmailToUserUseCase) Exec(input usecases.InputSendConfirm
 		return err
 	}
 
-	user, err := s.UserRepo.FindById(input.IdUserToCreateToken)
-	if err != nil {
-		return err
-	}
-
 	if confirmed {
 		return &core_error.ErroBase{
 			Message: data_error.UserAlreadyConfirmedErrorMessage,
 			Code:    data_error.UserAlreadyConfirmedErrorCode,
 		}
+	}
+
+	user, err := s.UserRepo.FindById(input.IdUserToCreateToken)
+	if err != nil {
+		return err
 	}
 
 	token, err := s.createTokenToSendWithEmail(input.IdUserToCreateToken)
