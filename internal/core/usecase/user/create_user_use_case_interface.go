@@ -10,7 +10,7 @@ type InputCreateUserUseCase struct {
 }
 
 type OutputCreateuserUseCase struct {
-	Id uint
+	Id uint `json:"id"`
 }
 
 type CreateUserUseCaseInterface interface {
