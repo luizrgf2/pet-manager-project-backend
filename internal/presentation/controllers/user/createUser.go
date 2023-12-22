@@ -19,7 +19,7 @@ type InputCreateUserController struct {
 }
 
 type CreateUserController struct {
-	usecase usecases_interfaces.CreateUserUseCaseInterface
+	Usecase usecases_interfaces.CreateUserUseCaseInterface
 }
 
 func (c *CreateUserController) validateFields(input InputCreateUserController) []string {
@@ -50,7 +50,7 @@ func (c *CreateUserController) Handle(input InputCreateUserController) contracts
 		AddrNumber:     input.AddrNumber,
 	}
 
-	res, err := c.usecase.Exec(input_usecase)
+	res, err := c.Usecase.Exec(input_usecase)
 
 	if err != nil {
 		return errorHandling.HandlingGenericError(err)
