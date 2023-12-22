@@ -10,12 +10,12 @@ import (
 )
 
 type InputCreateUserController struct {
-	NamePet        string `validate:"required"`
-	Email          string `validate:"required, email"`
-	Password       string `validate:"required, max=30, min=8"`
-	AddrCep        string `validate:"required, max=8, min=8"`
-	AddrComplement string `validate:"max=100"`
-	AddrNumber     uint   `validate:"required"`
+	NamePet        string `validate:"required" json:"namePet"`
+	Email          string `validate:"required, email" json:"email"`
+	Password       string `validate:"required, max=30, min=8" json:"password"`
+	AddrCep        string `validate:"required, max=8, min=8" json:"addrCep"`
+	AddrComplement string `validate:"max=100" json:"addrComplement"`
+	AddrNumber     uint   `validate:"required" json:"addrNumber"`
 }
 
 type CreateUserController struct {
