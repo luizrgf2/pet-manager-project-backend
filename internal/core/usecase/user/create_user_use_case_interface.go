@@ -14,5 +14,5 @@ type OutputCreateuserUseCase struct {
 }
 
 type CreateUserUseCaseInterface interface {
-	Exec(input InputCreateUserUseCase) (OutputCreateuserUseCase, error)
+	Exec(input InputCreateUserUseCase) (*OutputCreateuserUseCase, error)
 }
