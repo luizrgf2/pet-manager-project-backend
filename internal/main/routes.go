@@ -7,10 +7,14 @@ import (
 
 var Router = mux.NewRouter()
 
-func UserRoutes() {
+func userRoutes() {
 	userRouters := Router.PathPrefix("/user").Subrouter()
 
 	//public routes
 	userRouters.HandleFunc("/create", controller_user.CreateUserHttpController).Methods("POST")
 
+}
+
+func init() {
+	userRoutes()
 }
