@@ -78,7 +78,7 @@ func (c *CreateUserUseCase) saveUser(user *entity.UserEntity) (*uint, error) {
 	return &user.Id, nil
 }
 
-func (c *CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
+func (c CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
 
 	err := c.validateCep(input.AddrCep)
 	if err != nil {
