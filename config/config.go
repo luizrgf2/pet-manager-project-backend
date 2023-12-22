@@ -32,6 +32,8 @@ func init() {
 		path_complete = strings.Split(base_path, "/test")[0]
 	} else if strings.Contains(base_path, "/internal") {
 		path_complete = strings.Split(base_path, "/internal")[0]
+	} else if strings.Contains(base_path, "/cmd") {
+		path_complete = strings.Split(base_path, "/cmd")[0]
 	}
 
 	enviroment := os.Getenv("ENVIROMENT")
