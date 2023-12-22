@@ -21,6 +21,7 @@ var (
 	SMTP_PASSWORD               = ""
 	SMTP_PORT                   = 0
 	SMTP_EMAIL_RECEIVER_TO_TEST = ""
+	API_PORT                    = 0
 )
 
 func init() {
@@ -59,6 +60,7 @@ func init() {
 	SMTP_EMAIL_SENDER = os.Getenv("SMTP_EMAIL_SENDER")
 	SMTP_PASSWORD = os.Getenv("SMTP_PASSWORD")
 	SMTP_PORT, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
+	API_PORT, err = strconv.Atoi(os.Getenv("API_PORT"))
 	SMTP_EMAIL_RECEIVER_TO_TEST = os.Getenv("SMTP_EMAIL_RECEIVER_TO_TEST")
 
 	if err != nil {
