@@ -10,12 +10,12 @@ import (
 )
 
 type InputCreateUserController struct {
-	NamePet        string `validate:"required" json:"namePet"`
-	Email          string `validate:"required, email" json:"email"`
-	Password       string `validate:"required, max=30, min=8" json:"password"`
-	AddrCep        string `validate:"required, max=8, min=8" json:"addrCep"`
-	AddrComplement string `validate:"max=100" json:"addrComplement"`
-	AddrNumber     uint   `validate:"required" json:"addrNumber"`
+	NamePet        string `json:"namePet" validate:"required"`
+	Email          string `json:"email" validate:"required,email"`
+	Password       string `json:"password" validate:"required,max=30,min=8"`
+	AddrCep        string `json:"addrCep" validate:"required,max=8,min=8"`
+	AddrComplement string `json:"addrComplement" validate:"max=100"`
+	AddrNumber     uint   `json:"addrNumber" validate:"required,number"`
 }
 
 type CreateUserController struct {
@@ -25,9 +25,14 @@ type CreateUserController struct {
 func (c *CreateUserController) validateFields(input InputCreateUserController) []string {
 	errorsToReturn := []string{}
 	validate := validator.New(validator.WithRequiredStructEnabled())
-	err_validations := validate.Struct(input)
+	err_validations := validate.Struct(&input)
+	if err_validations == nil {
+		return errorsToReturn
+	}
 	for _, e := range err_validations.(validator.ValidationErrors) {
-		errorsToReturn = append(errorsToReturn, fmt.Sprintf("Erro no campo [%s] : %s", e.Field(), e.Error()))
+		if e != nil {
+			errorsToReturn = append(errorsToReturn, fmt.Sprintf("Erro no campo [%s] : %s", e.Field(), e.Error()))
+		}
 	}
 	return errorsToReturn
 }
