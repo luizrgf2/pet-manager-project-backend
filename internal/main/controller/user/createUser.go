@@ -13,9 +13,11 @@ func CreateUserHttpController(w http.ResponseWriter, r *http.Request) {
 	input := controller_interfaces.InputCreateUserController{}
 
 	errJson := json.NewDecoder(r.Body).Decode(&input)
+
+	w.Header().Set("Content-Type", "application/json")
+
 	if errJson != nil {
 		fieldError := controller_error.InputFieldsErrorHTTP()
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(int(fieldError.Code))
 		responseJson, _ := json.Marshal(&fieldError)
 		w.Write(responseJson)
@@ -25,7 +27,6 @@ func CreateUserHttpController(w http.ResponseWriter, r *http.Request) {
 	controller := factories.CreateUserFactoryController()
 	res := controller.Handle(input)
 	resJson, _ := json.Marshal(res)
-	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(int(res.Code))
 	w.Write(resJson)
 }
