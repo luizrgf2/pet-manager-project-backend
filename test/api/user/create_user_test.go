@@ -76,3 +76,90 @@ func TestReturnErrorIfCreateUserAlreadyExists(t *testing.T) {
 	assert.Equal(t, []string{expectedError.Message}, responseStruct.ErrorsMessage)
 
 }
+
+func TestReturnErrorIfCreateUserWithInvalidEmail(t *testing.T) {
+
+	responseStruct := contracts.HTTPResponse[usercases_interfaces.OutputCreateuserUseCase]{}
+
+	input := controller.InputCreateUserController{
+		NamePet:        "Felicidog Pet Salon",
+		Email:          "email",
+		Password:       "Test12345",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     786,
+	}
+
+	requestBody, _ := json.Marshal(input)
+	req := httptest.NewRequest("POST", "/user/create", bytes.NewBuffer(requestBody))
+
+	r := routes.Router
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	err := json.NewDecoder(rr.Body).Decode(&responseStruct)
+
+	assert.Nil(t, err)
+	assert.Equal(t, rr.Code, 400)
+	assert.Equal(t, 1, len(responseStruct.ErrorsMessage))
+
+}
+
+func TestReturnErrorIfCreateUserWithInvalidPassword(t *testing.T) {
+
+	responseStruct := contracts.HTTPResponse[usercases_interfaces.OutputCreateuserUseCase]{}
+
+	input := controller.InputCreateUserController{
+		NamePet:        "Felicidog Pet Salon",
+		Email:          "email@email.com",
+		Password:       "Test",
+		AddrCep:        "38705280",
+		AddrComplement: "",
+		AddrNumber:     786,
+	}
+
+	requestBody, _ := json.Marshal(input)
+	req := httptest.NewRequest("POST", "/user/create", bytes.NewBuffer(requestBody))
+
+	r := routes.Router
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	err := json.NewDecoder(rr.Body).Decode(&responseStruct)
+
+	assert.Nil(t, err)
+	assert.Equal(t, rr.Code, 400)
+	assert.Equal(t, 1, len(responseStruct.ErrorsMessage))
+
+}
+
+func TestReturnErrorIfCreateUserWithInvalidCep(t *testing.T) {
+
+	responseStruct := contracts.HTTPResponse[usercases_interfaces.OutputCreateuserUseCase]{}
+
+	input := controller.InputCreateUserController{
+		NamePet:        "Felicidog Pet Salon",
+		Email:          "email@email.com",
+		Password:       "Test12345",
+		AddrCep:        "3870528",
+		AddrComplement: "",
+		AddrNumber:     786,
+	}
+
+	requestBody, _ := json.Marshal(input)
+	req := httptest.NewRequest("POST", "/user/create", bytes.NewBuffer(requestBody))
+
+	r := routes.Router
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	err := json.NewDecoder(rr.Body).Decode(&responseStruct)
+
+	assert.Nil(t, err)
+	assert.Equal(t, rr.Code, 400)
+	assert.Equal(t, 1, len(responseStruct.ErrorsMessage))
+
+}
