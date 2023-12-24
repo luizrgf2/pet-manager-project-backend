@@ -9,3 +9,11 @@ func InputFieldsErrorHTTP() contracts.HTTPResponse[interface{}] {
 		Code:          400,
 	}
 }
+
+func InputIdInvalid() contracts.HTTPResponse[interface{}] {
+	return contracts.HTTPResponse[interface{}]{
+		Response:      nil,
+		ErrorsMessage: []string{"O identificador é inválido!"},
+		Code:          400,
+	}
+}
