@@ -5,7 +5,7 @@ import (
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
 	moks "github.com/luizrgf2/pet-manager-project-backend/internal/core/entity/moks"
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,9 +31,9 @@ func TestCreateUser(t *testing.T) {
 
 func TestReturnErrorIfIsEmailInvalid(t *testing.T) {
 
-	expectedError := errors.ErroBase{
-		Message: errors.UserEmailInvalidErrorMessage,
-		Code:    errors.UserEmailInvalidErrorCode,
+	expectedError := core_errors.ErroBase{
+		Message: core_errors.UserEmailInvalidErrorMessage,
+		Code:    core_errors.UserEmailInvalidErrorCode,
 	}
 
 	userMocked := moks.UserMock
@@ -56,9 +56,9 @@ func TestReturnErrorIfIsEmailInvalid(t *testing.T) {
 
 func TestReturnErrorIfIsEmaiIsEmpty(t *testing.T) {
 
-	expectedError := errors.ErroBase{
-		Message: errors.UserEmailInvalidErrorMessage,
-		Code:    errors.UserEmailInvalidErrorCode,
+	expectedError := core_errors.ErroBase{
+		Message: core_errors.UserEmailInvalidErrorMessage,
+		Code:    core_errors.UserEmailInvalidErrorCode,
 	}
 
 	userMocked := moks.UserMock
@@ -80,10 +80,9 @@ func TestReturnErrorIfIsEmaiIsEmpty(t *testing.T) {
 }
 
 func TestReturnErrorIfIsPassLenInvalid(t *testing.T) {
-
-	expectedError := errors.ErroBase{
-		Message: errors.UserPasswordLenErrorMessage,
-		Code:    errors.UserPasswordUpperLetterErrorCode,
+	expectedError := core_errors.ErroBase{
+		Message: core_errors.UserPasswordLenErrorMessage,
+		Code:    core_errors.UserPasswordUpperLetterErrorCode,
 	}
 
 	userMocked := moks.UserMock
@@ -106,9 +105,9 @@ func TestReturnErrorIfIsPassLenInvalid(t *testing.T) {
 
 func TestReturnErrorIfIsPassUpperLetterInvalid(t *testing.T) {
 
-	expectedError := errors.ErroBase{
-		Message: errors.UserPasswordUpperLetterErrorMessage,
-		Code:    errors.UserPasswordUpperLetterErrorCode,
+	expectedError := core_errors.ErroBase{
+		Message: core_errors.UserPasswordUpperLetterErrorMessage,
+		Code:    core_errors.UserPasswordUpperLetterErrorCode,
 	}
 
 	userMocked := moks.UserMock
@@ -131,9 +130,9 @@ func TestReturnErrorIfIsPassUpperLetterInvalid(t *testing.T) {
 
 func TestReturnErrorIfCreateNewUserWithInvalidStateLocation(t *testing.T) {
 
-	expectedError := errors.ErroBase{
-		Message: errors.UserStateInvalidErrorMessage,
-		Code:    errors.UserStateInvalidErrorCode,
+	expectedError := core_errors.ErroBase{
+		Message: core_errors.UserStateInvalidErrorMessage,
+		Code:    core_errors.UserStateInvalidErrorCode,
 	}
 
 	userMocked := moks.UserMock
