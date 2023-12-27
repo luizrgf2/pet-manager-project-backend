@@ -1,4 +1,4 @@
-package usecases
+package user_usecases_interfaces
 
 type InputCreateUserUseCase struct {
 	NamePet        string
