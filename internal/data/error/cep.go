@@ -1,4 +1,4 @@
-package error
+package data_error
 
 var (
 	CEPInvalidErrorCode   = 422
