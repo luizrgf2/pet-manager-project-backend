@@ -1,4 +1,4 @@
-package errors
+package core_errors
 
 const (
 	UserPasswordLenErrorCode         = 422
