@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/luizrgf2/pet-manager-project-backend/config"
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
@@ -64,9 +64,9 @@ func TestSendConfirmationEmail(t *testing.T) {
 
 func TestReturnErrorIfSendEmailToUserNotExists(t *testing.T) {
 
-	expectedError := &errors.ErroBase{
-		Message: errors.UserNotExistsErrorMessage,
-		Code:    errors.UserNotExistsErrorCode,
+	expectedError := &core_errors.ErroBase{
+		Message: core_errors.UserNotExistsErrorMessage,
+		Code:    core_errors.UserNotExistsErrorCode,
 	}
 
 	jwtService := services.JWTService{}
