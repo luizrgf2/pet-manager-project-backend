@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	core_error "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
-	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
+	user_usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	data_error "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	"github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/repository"
 	services "github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/service"
@@ -33,7 +33,7 @@ func (s *SendConfirmationEmailToUserUseCase) sendEmailToUser(token string, email
 	return nil
 }
 
-func (s SendConfirmationEmailToUserUseCase) Exec(input usecases.InputSendConfirmationEmailToSendUserUseCase) error {
+func (s SendConfirmationEmailToUserUseCase) Exec(input user_usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase) error {
 
 	confirmed, err := s.UserRepo.CheckIfUserConfirmed(input.IdUserToCreateToken)
 	if err != nil {

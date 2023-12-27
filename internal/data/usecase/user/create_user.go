@@ -6,7 +6,7 @@ import (
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
 	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
-	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
+	user_usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	data_errors "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	repository "github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/repository"
 	services "github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/service"
@@ -78,7 +78,7 @@ func (c *CreateUserUseCase) saveUser(user *entity.UserEntity) (*uint, error) {
 	return &user.Id, nil
 }
 
-func (c CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecases.OutputCreateuserUseCase, error) {
+func (c CreateUserUseCase) Exec(input user_usecases_interfaces.InputCreateUserUseCase) (*user_usecases_interfaces.OutputCreateuserUseCase, error) {
 
 	err := c.validateCep(input.AddrCep)
 	if err != nil {
@@ -122,7 +122,7 @@ func (c CreateUserUseCase) Exec(input usecases.InputCreateUserUseCase) (*usecase
 		return nil, err
 	}
 
-	outputToReturn := usecases.OutputCreateuserUseCase{Id: *idUser}
+	outputToReturn := user_usecases_interfaces.OutputCreateuserUseCase{Id: *idUser}
 
 	return &outputToReturn, nil
 }

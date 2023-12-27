@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	errors_core "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
-	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
+	user_usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 	errors_data "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	usecases_imp "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	repository_moks "github.com/luizrgf2/pet-manager-project-backend/test/moks/repository"
@@ -26,7 +26,7 @@ var sut = usecases_imp.CreateUserUseCase{
 
 func TestCreateUserUseCase(t *testing.T) {
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid.com",
 		Password:       "Teste12345",
@@ -47,7 +47,7 @@ func TestReturnErrorWIthInvalidEmail(t *testing.T) {
 		Code:    errors_core.UserNameInvalidErrorCode,
 	}
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid",
 		Password:       "Teste12345",
@@ -68,7 +68,7 @@ func TestReturnErrorWIthInvalidCep(t *testing.T) {
 		Code:    uint(errors_data.CEPInvalidErrorCode),
 	}
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid.com",
 		Password:       "Teste12345",
@@ -89,7 +89,7 @@ func TestReturnErrorWIthInvalidPasswordLen(t *testing.T) {
 		Code:    errors_core.UserPasswordLenErrorCode,
 	}
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid.com",
 		Password:       "1234",
@@ -110,7 +110,7 @@ func TestReturnErrorWIthInvalidPasswordUpperCase(t *testing.T) {
 		Code:    errors_core.UserPasswordUpperLetterErrorCode,
 	}
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid.com",
 		Password:       "teste12345",
@@ -131,7 +131,7 @@ func TestReturnErrorIfTryCreateUserWithEmailAlreadyExists(t *testing.T) {
 		Code:    errors_core.UserAlreadyExistsErrorCode,
 	}
 
-	userToTeste := usecases_interfaces.InputCreateUserUseCase{
+	userToTeste := user_usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
 		Email:          "email@valid1.com",
 		Password:       "Teste12345",

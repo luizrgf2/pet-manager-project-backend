@@ -4,7 +4,8 @@ import (
 	"testing"
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
-	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
+	user_usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
+
 	data_errors "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
 	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
 	"github.com/stretchr/testify/assert"
@@ -24,7 +25,7 @@ func TestSendConfirmationEmail(t *testing.T) {
 		ExpirationTimeForTokenInSeconds: 21600,
 		UserRepo:                        userRepo,
 	}
-	input := usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
+	input := user_usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
 		IdUserToCreateToken: 1,
 	}
 	err := sut.Exec(input)
@@ -48,7 +49,7 @@ func TestReturnErrorIfSendEmailToUserConfirmed(t *testing.T) {
 		ExpirationTimeForTokenInSeconds: 21600,
 		UserRepo:                        userRepo,
 	}
-	input := usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
+	input := user_usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
 		IdUserToCreateToken: 2,
 	}
 	err := sut.Exec(input)
@@ -72,7 +73,7 @@ func TestReturnErrorIfSendEmailToUserNotExists(t *testing.T) {
 		ExpirationTimeForTokenInSeconds: 21600,
 		UserRepo:                        userRepo,
 	}
-	input := usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
+	input := user_usecases_interfaces.InputSendConfirmationEmailToSendUserUseCase{
 		IdUserToCreateToken: 3,
 	}
 	err := sut.Exec(input)
