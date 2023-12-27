@@ -3,7 +3,7 @@ package user_usercases_test
 import (
 	"testing"
 
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	user_usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
 
 	data_errors "github.com/luizrgf2/pet-manager-project-backend/internal/data/error"
@@ -34,7 +34,7 @@ func TestSendConfirmationEmail(t *testing.T) {
 
 func TestReturnErrorIfSendEmailToUserConfirmed(t *testing.T) {
 
-	expectedError := &errors.ErroBase{
+	expectedError := &core_errors.ErroBase{
 		Message: data_errors.UserAlreadyConfirmedErrorMessage,
 		Code:    data_errors.UserAlreadyConfirmedErrorCode,
 	}
@@ -58,9 +58,9 @@ func TestReturnErrorIfSendEmailToUserConfirmed(t *testing.T) {
 
 func TestReturnErrorIfSendEmailToUserNotExists(t *testing.T) {
 
-	expectedError := &errors.ErroBase{
-		Message: errors.UserNotExistsErrorMessage,
-		Code:    errors.UserNotExistsErrorCode,
+	expectedError := &core_errors.ErroBase{
+		Message: core_errors.UserNotExistsErrorMessage,
+		Code:    core_errors.UserNotExistsErrorCode,
 	}
 
 	jwtService := services.JWTServiceInMemory{}
