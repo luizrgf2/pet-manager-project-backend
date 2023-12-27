@@ -1,13 +1,13 @@
 package user_usecases_interfaces
 
 type InputConfirmUserWithTokenUseCase struct {
-	token string
+	Token string
 }
 
 type OutputConfirmUserWithTokenUseCase struct {
-	namePet string
+	NamePet string
 }
 
 type CofirmUserWithTokenUseCaseInterface interface {
-	Exec(input InputConfirmUserWithTokenUseCase) (OutputConfirmUserWithTokenUseCase, error)
+	Exec(input InputConfirmUserWithTokenUseCase) (*OutputConfirmUserWithTokenUseCase, error)
 }
