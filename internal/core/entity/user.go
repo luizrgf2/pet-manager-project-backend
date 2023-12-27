@@ -5,7 +5,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 )
 
 type UserEntity struct {
@@ -89,27 +89,26 @@ func NewUser(NamePet string, Email string, Password string, AddrCep string, Addr
 		UpdatedAt:      time.Now(),
 		CreatedAt:      time.Now(),
 	}
-
 	if !user.IsValidEmail() {
-		return nil, &errors.ErroBase{Message: errors.UserEmailInvalidErrorMessage, Code: errors.UserEmailInvalidErrorCode}
+		return nil, &core_errors.ErroBase{Message: core_errors.UserEmailInvalidErrorMessage, Code: core_errors.UserEmailInvalidErrorCode}
 	}
 
 	if !user.IsValidLenPassword() {
-		return nil, &errors.ErroBase{Message: errors.UserPasswordLenErrorMessage, Code: errors.UserPasswordLenErrorCode}
+		return nil, &core_errors.ErroBase{Message: core_errors.UserPasswordLenErrorMessage, Code: core_errors.UserPasswordLenErrorCode}
 	}
 
 	if !user.IsValidUpperLetterPassword() {
-		return nil, &errors.ErroBase{Message: errors.UserPasswordUpperLetterErrorMessage, Code: errors.UserPasswordUpperLetterErrorCode}
+		return nil, &core_errors.ErroBase{Message: core_errors.UserPasswordUpperLetterErrorMessage, Code: core_errors.UserPasswordUpperLetterErrorCode}
 	}
 
 	if !user.IsValidName() {
-		return nil, &errors.ErroBase{Message: errors.UserNameInvalidErrorMessage, Code: errors.UserNameInvalidErrorCode}
+		return nil, &core_errors.ErroBase{Message: core_errors.UserNameInvalidErrorMessage, Code: core_errors.UserNameInvalidErrorCode}
 	}
 
 	if !user.IsValidState() {
-		return nil, &errors.ErroBase{
-			Message: errors.UserStateInvalidErrorMessage,
-			Code:    errors.UserStateInvalidErrorCode,
+		return nil, &core_errors.ErroBase{
+			Message: core_errors.UserStateInvalidErrorMessage,
+			Code:    core_errors.UserStateInvalidErrorCode,
 		}
 	}
 
