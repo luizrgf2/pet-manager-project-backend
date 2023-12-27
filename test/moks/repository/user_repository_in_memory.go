@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	"github.com/luizrgf2/pet-manager-project-backend/internal/data/interfaces/repository"
 )
 
@@ -97,9 +97,9 @@ func (U UserRepositoryInMemory) FindById(id uint) (*entity.UserEntity, error) {
 			return &user, nil
 		}
 	}
-	return nil, &errors.ErroBase{
-		Message: errors.UserNotExistsErrorMessage,
-		Code:    errors.UserNotExistsErrorCode,
+	return nil, &core_errors.ErroBase{
+		Message: core_errors.UserNotExistsErrorMessage,
+		Code:    core_errors.UserNotExistsErrorCode,
 	}
 }
 
@@ -126,9 +126,9 @@ func (U UserRepositoryInMemory) FindByEmail(email string) (*entity.UserEntity, e
 			return &user, nil
 		}
 	}
-	return nil, &errors.ErroBase{
-		Message: errors.UserNotExistsErrorMessage,
-		Code:    errors.UserNotExistsErrorCode,
+	return nil, &core_errors.ErroBase{
+		Message: core_errors.UserNotExistsErrorMessage,
+		Code:    core_errors.UserNotExistsErrorCode,
 	}
 }
 
@@ -146,9 +146,9 @@ func (U UserRepositoryInMemory) Update(id uint, input repository.UpdateUserRepos
 	}
 
 	if user == nil {
-		return nil, &errors.ErroBase{
-			Message: errors.UserNotExistsErrorMessage,
-			Code:    errors.UserNotExistsErrorCode,
+		return nil, &core_errors.ErroBase{
+			Message: core_errors.UserNotExistsErrorMessage,
+			Code:    core_errors.UserNotExistsErrorCode,
 		}
 	}
 
@@ -203,9 +203,9 @@ func (U UserRepositoryInMemory) CheckIfUserConfirmed(id uint) (bool, error) {
 	} else if id == 2 {
 		return true, nil
 	} else {
-		return false, &errors.ErroBase{
-			Message: errors.UserNotExistsErrorMessage,
-			Code:    errors.UserNotExistsErrorCode,
+		return false, &core_errors.ErroBase{
+			Message: core_errors.UserNotExistsErrorMessage,
+			Code:    core_errors.UserNotExistsErrorCode,
 		}
 	}
 
@@ -221,9 +221,9 @@ func (U UserRepositoryInMemory) Delete(id uint) error {
 	}
 
 	if user == nil {
-		return &errors.ErroBase{
-			Message: errors.UserNotExistsErrorMessage,
-			Code:    errors.UserNotExistsErrorCode,
+		return &core_errors.ErroBase{
+			Message: core_errors.UserNotExistsErrorMessage,
+			Code:    core_errors.UserNotExistsErrorCode,
 		}
 	}
 
