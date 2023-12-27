@@ -1,4 +1,4 @@
-package usecases_test
+package user_usercases_test
 
 import (
 	"testing"
