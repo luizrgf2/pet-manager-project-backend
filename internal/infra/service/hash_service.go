@@ -3,7 +3,7 @@ package service
 import (
 	"log"
 
-	"github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
+	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -15,7 +15,7 @@ func (h HashService) Hash(data string) (*string, error) {
 
 	if err != nil {
 		log.Fatal(err.Error())
-		return nil, &errors.ErroBase{
+		return nil, &core_errors.ErroBase{
 			Message: "Erro para codificar a senha!",
 			Code:    500,
 		}
