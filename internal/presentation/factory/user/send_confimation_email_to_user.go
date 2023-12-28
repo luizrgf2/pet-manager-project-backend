@@ -1,4 +1,4 @@
-package factories
+package user_factories
 
 import (
 	"github.com/luizrgf2/pet-manager-project-backend/config"
