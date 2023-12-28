@@ -1,4 +1,4 @@
-package error
+package infra_error
 
 var (
 	EmailNotFoundedErrorMessage = "O email não foi encontrado, aparentemente ele não existe!"

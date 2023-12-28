@@ -1,4 +1,4 @@
-package error
+package data_error
 
 var (
 	UserAlreadyConfirmedErrorMessage = "O usuário já foi confirmado!"

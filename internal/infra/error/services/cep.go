@@ -1,4 +1,4 @@
-package error
+package infra_error
 
 var (
 	CEPServiceUnavailableErrorMessage = "O serviço de cep não está disponível!"
