@@ -9,18 +9,13 @@ import (
 
 	"github.com/luizrgf2/pet-manager-project-backend/config"
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
-	usecases "github.com/luizrgf2/pet-manager-project-backend/internal/data/usecase/user"
-	"github.com/luizrgf2/pet-manager-project-backend/internal/infra/repository"
-	services "github.com/luizrgf2/pet-manager-project-backend/internal/infra/service"
 	routes "github.com/luizrgf2/pet-manager-project-backend/internal/main"
 	controller "github.com/luizrgf2/pet-manager-project-backend/internal/presentation/controllers/user"
+	user_factories "github.com/luizrgf2/pet-manager-project-backend/internal/presentation/factory/user"
 	"github.com/stretchr/testify/assert"
 )
 
-func init() {
-	cepService := services.CepServiceViaCep{}
-	hashService := services.HashService{}
-	userRepo := repository.UserRepository{}
+func createUserToTest() {
 
 	userToTeste := usecases_interfaces.InputCreateUserUseCase{
 		NamePet:        "Felicidog pet salon",
@@ -31,11 +26,7 @@ func init() {
 		AddrNumber:     622,
 	}
 
-	createUserUseCase := usecases.CreateUserUseCase{
-		CepService:     cepService,
-		UserRepository: userRepo,
-		HashService:    hashService,
-	}
+	createUserUseCase := user_factories.CreateUserFactoryUseCase()
 
 	_, err := createUserUseCase.Exec(userToTeste)
 
@@ -48,6 +39,9 @@ func init() {
 }
 
 func TestSendConfirmationEmail(t *testing.T) {
+
+	createUserToTest()
+
 	input := controller.InputSendEmailConfirmationToUserController{
 		Id: 1,
 	}
