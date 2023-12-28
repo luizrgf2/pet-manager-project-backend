@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+	"unicode/utf8"
 
 	"github.com/luizrgf2/pet-manager-project-backend/internal/core/entity"
 	core_errors "github.com/luizrgf2/pet-manager-project-backend/internal/core/errors"
@@ -139,6 +140,32 @@ func (u UserRepository) FindByEmail(email string) (*entity.UserEntity, error) {
 	return &user, nil
 }
 
+func (u UserRepository) FindConfirmationToken(idUser uint) (*string, error) {
+	query := fmt.Sprintf("SELECT confirmation_token FROM users WHERE id = %d", idUser)
+
+	result, err := DB.DB.Query(query)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return nil, err
+	}
+
+	token := ""
+
+	for result.Next() {
+		result.Scan(token)
+	}
+
+	if utf8.RuneCountInString(token) == 0 {
+		return nil, &core_errors.ErroBase{
+			Message: core_errors.UserNotExistsErrorMessage,
+			Code:    core_errors.UserNotExistsErrorCode,
+		}
+	}
+
+	return &token, nil
+}
+
 func (u UserRepository) UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error {
 
 	if expirationTimeInSeconds != nil {
@@ -156,7 +183,7 @@ func (u UserRepository) UpdateConfirmationToken(id uint, token string, expiratio
 			}
 		}
 
-		if rowsEffected, err := result.RowsAffected(); err != nil {
+		if rowsEffected, err := result.RowsAffected(); err == nil {
 			if rowsEffected != 1 {
 				return &core_errors.ErroBase{
 					Message: "Erro para atualizar o token de confirmação!",
