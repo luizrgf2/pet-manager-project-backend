@@ -16,7 +16,6 @@ import (
 var cepService = tests_moks.CEPServiceInMemory{}
 var hashService = tests_moks.HashServiceInMemory{}
 var userRepo = repository_moks.UserRepositoryInMemory{}
-var jwtService = tests_moks.JWTServiceInMemory{}
 
 var sut = usecases_imp.CreateUserUseCase{
 	CepService:     cepService,
