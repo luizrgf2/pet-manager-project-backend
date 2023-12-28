@@ -132,6 +132,11 @@ func (U UserRepositoryInMemory) FindByEmail(email string) (*entity.UserEntity, e
 	}
 }
 
+func (u UserRepositoryInMemory) FindConfirmationToken(idUser uint) (*string, error) {
+	validConfirmationToken := "validtoken"
+	return &validConfirmationToken, nil
+}
+
 func (u UserRepositoryInMemory) UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error {
 	return nil
 }
