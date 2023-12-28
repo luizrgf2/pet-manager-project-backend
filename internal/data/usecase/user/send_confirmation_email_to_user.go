@@ -57,6 +57,11 @@ func (s SendConfirmationEmailToUserUseCase) Exec(input user_usecases_interfaces.
 		return err
 	}
 
+	errUpdasteTokenInsideUser := s.UserRepo.UpdateConfirmationToken(user.Id, *token, &s.ExpirationTimeForTokenInSeconds)
+	if errUpdasteTokenInsideUser != nil {
+		return errUpdasteTokenInsideUser
+	}
+
 	ErrToSendEmail := s.sendEmailToUser(*token, user.Email)
 	if ErrToSendEmail != nil {
 		return ErrToSendEmail
