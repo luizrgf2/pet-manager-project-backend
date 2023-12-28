@@ -13,11 +13,11 @@ type InputConfirmUserWithTokenController struct {
 	Token string `json:"token" validator:"required"`
 }
 
-type CreateConfirmUserWithTokenController struct {
+type ConfirmUserWithTokenController struct {
 	Usecase usecases_interfaces.CofirmUserWithTokenUseCaseInterface
 }
 
-func (c *CreateConfirmUserWithTokenController) validateFields(input InputConfirmUserWithTokenController) []string {
+func (c *ConfirmUserWithTokenController) validateFields(input InputConfirmUserWithTokenController) []string {
 	errorsToReturn := []string{}
 	validate := validator.New(validator.WithRequiredStructEnabled())
 	err_validations := validate.Struct(&input)
@@ -32,7 +32,7 @@ func (c *CreateConfirmUserWithTokenController) validateFields(input InputConfirm
 	return errorsToReturn
 }
 
-func (c *CreateConfirmUserWithTokenController) Handle(input InputConfirmUserWithTokenController) contracts.HTTPResponse[usecases_interfaces.OutputConfirmUserWithTokenUseCase] {
+func (c *ConfirmUserWithTokenController) Handle(input InputConfirmUserWithTokenController) contracts.HTTPResponse[usecases_interfaces.OutputConfirmUserWithTokenUseCase] {
 
 	errorHandling := common.ErrorHandling[usecases_interfaces.OutputConfirmUserWithTokenUseCase]{}
 
