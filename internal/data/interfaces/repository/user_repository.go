@@ -34,6 +34,7 @@ type UserRepositoryInterface interface {
 	Create(input CreateUserRepositoryInput) (*entity.UserEntity, error)
 	FindById(id uint) (*entity.UserEntity, error)
 	FindByEmail(email string) (*entity.UserEntity, error)
+	FindConfirmationToken(idUser uint) (*string, error)
 	Update(id uint, input UpdateUserRepositoryInput) (*entity.UserEntity, error)
 	UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error
 	CheckIfUserConfirmed(id uint) (bool, error)
