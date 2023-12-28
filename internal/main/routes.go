@@ -13,7 +13,7 @@ func userRoutes() {
 	//public routes
 	userRouters.HandleFunc("/create", controller_user.CreateUserHttpController).Methods("POST")
 	userRouters.HandleFunc("/confirmationemail/{id}", controller_user.SendConfirmationEmailToUserHttpController).Methods("GET")
-	userRouters.HandleFunc("/confirm/{token}", controller_user.confirm).Methods("GET")
+	userRouters.HandleFunc("/confirm/{token}", controller_user.ConfirmUserWithTokenHttpController).Methods("GET")
 
 }
 
