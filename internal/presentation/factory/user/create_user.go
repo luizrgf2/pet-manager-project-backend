@@ -1,4 +1,4 @@
-package factories
+package user_factories
 
 import (
 	usecases_interfaces "github.com/luizrgf2/pet-manager-project-backend/internal/core/usecase/user"
