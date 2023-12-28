@@ -1,4 +1,4 @@
-package error
+package infra_error
 
 var (
 	JWTIvalidTokenErrorMessage        = "O token fornecido não é válido!"
