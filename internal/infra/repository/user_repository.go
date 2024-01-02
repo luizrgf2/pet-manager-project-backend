@@ -153,7 +153,7 @@ func (u UserRepository) FindConfirmationToken(idUser uint) (*string, error) {
 	token := ""
 
 	for result.Next() {
-		result.Scan(token)
+		result.Scan(&token)
 	}
 
 	if utf8.RuneCountInString(token) == 0 {
@@ -171,7 +171,7 @@ func (u UserRepository) UpdateConfirmationToken(id uint, token string, expiratio
 	if expirationTimeInSeconds != nil {
 		expiration := *expirationTimeInSeconds
 		expirationDate := time.Now()
-		expirationDate.Add(time.Duration(expiration))
+		expirationDate = expirationDate.Add(time.Second * time.Duration(expiration))
 
 		query := fmt.Sprintf("UPDATE users SET confirmation_token = '%s', expiration_confirmation_token='%s' WHERE id=%d", token, expirationDate.Format("2006-01-02 15:04:05"), id)
 		result, err := DB.DB.Exec(query)
@@ -261,6 +261,30 @@ func (u UserRepository) CheckIfUserConfirmed(id uint) (bool, error) {
 		)
 	}
 	return confirmed, nil
+}
+
+func (u UserRepository) ConfirmUser(id uint) error {
+
+	query := fmt.Sprintf("UPDATE users SET confirmed = 1 WHERE id=%d", id)
+	result, err := DB.DB.Exec(query)
+
+	errorToConfirmedUser := &core_errors.ErroBase{
+		Message: "Erro para confirmar o usuário!",
+		Code:    500,
+	}
+
+	if err != nil {
+		return errorToConfirmedUser
+	}
+
+	if rowsEffected, err := result.RowsAffected(); err == nil {
+		if rowsEffected != 1 {
+			return errorToConfirmedUser
+		}
+	} else {
+		return errorToConfirmedUser
+	}
+	return nil
 }
 
 func (u UserRepository) Delete(id uint) error {
