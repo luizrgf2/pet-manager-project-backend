@@ -62,6 +62,11 @@ func (c ConfirmUserWithToken) Exec(input user_usecases_interfaces.InputConfirmUs
 		return nil, err
 	}
 
+	errToUpdateConfirmed := c.UserRepo.ConfirmUser(idUser)
+	if errToUpdateConfirmed != nil {
+		return nil, errToUpdateConfirmed
+	}
+
 	return &user_usecases_interfaces.OutputConfirmUserWithTokenUseCase{NamePet: user.NamePet}, nil
 
 }
