@@ -20,7 +20,7 @@ func (j JWTService) CreateToken(idUser string, expirationTimeInSeconds *uint) (*
 	if expirationTimeInSeconds != nil {
 		expiration := *expirationTimeInSeconds
 		expirationDate := time.Now()
-		expirationDate.Add(time.Duration(expiration))
+		expirationDate = expirationDate.Add(time.Second * time.Duration(expiration))
 
 		registerClains := jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationDate),
