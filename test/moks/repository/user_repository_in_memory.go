@@ -239,3 +239,7 @@ func (U UserRepositoryInMemory) Delete(id uint) error {
 	}
 	return nil
 }
+
+func (U UserRepositoryInMemory) ConfirmUser(id uint) error {
+	return nil
+}
