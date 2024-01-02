@@ -58,6 +58,6 @@ func (c *ConfirmUserWithTokenController) Handle(input InputConfirmUserWithTokenC
 	return contracts.HTTPResponse[usecases_interfaces.OutputConfirmUserWithTokenUseCase]{
 		Response:      &outputRes,
 		ErrorsMessage: []string{},
-		Code:          201,
+		Code:          200,
 	}
 }
