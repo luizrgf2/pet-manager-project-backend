@@ -38,5 +38,6 @@ type UserRepositoryInterface interface {
 	Update(id uint, input UpdateUserRepositoryInput) (*entity.UserEntity, error)
 	UpdateConfirmationToken(id uint, token string, expirationTimeInSeconds *uint) error
 	CheckIfUserConfirmed(id uint) (bool, error)
+	ConfirmUser(id uint) error
 	Delete(id uint) error
 }
